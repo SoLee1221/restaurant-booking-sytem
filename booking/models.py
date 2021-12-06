@@ -8,5 +8,4 @@ class Booking(models.Model):
     customer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="booking")
     comment = models.TextField()
     number_of_customers = models.IntegerField(default=1)
-
-
+    
