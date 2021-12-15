@@ -7,4 +7,9 @@ class PostList(generic.ListView):
     model = Booking
     queryset = Booking.objects.order_by("-created_on")
     template_name = "index.html"
-    paginate_by = 6
+    paginate_by = 3
+
+class Booking(View):
+    
+    def post(self, request):
+        
