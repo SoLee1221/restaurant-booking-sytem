@@ -9,7 +9,16 @@ class PostList(generic.ListView):
     template_name = "index.html"
     paginate_by = 3
 
-class Booking(View):
+class BookingDetail(View):
     
-    def post(self, request):
-        
+    def get(self, request, *args, **kwargs):
+        queryset = Booking.objects.all()
+        booking = get_object_or_404(queryset)
+
+        return render(
+            request,
+            "booking_detail.html",
+            {
+                "booking": booking
+            },
+        )
