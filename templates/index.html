@@ -6,16 +6,19 @@
     <div class="row">
 
         <!-- Blog Entries Column -->
-        <div>
-            <a href="booking_detail.html" aria-label="Jump to booking section">Book now</a>
-        </div>
+       
+        
         <div class="col-12 mt-3 left">
             <div class="row">
             {% for booking in booking_list %}
+            <div>
+                <a href="{% url 'booking_detail' booking.pk %}"><p>link</p>
+                </a>
+            </div>
                 <div class="col-md-4">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <p>{{ booking.body }}</p>
+                            <h1>{{ booking.body }}</h1>
                         </div>
                     </div>
                 </div>
@@ -24,6 +27,12 @@
             <div class="row">
             {% endif %}
             {% endfor %}
+            </div>
+            <div>
+                <p>asdasdasadsdsaasd</p>
+            {% if user.is_authenticated %}
+            <button type="button">Submit</button>
+            {% endif %}
             </div>
         </div>
     </div>
