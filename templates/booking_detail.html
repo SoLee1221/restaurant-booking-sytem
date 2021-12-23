@@ -1,5 +1,22 @@
 {% extends 'base.html' %} {% block content %}
 
-<h3>{{ booking.body }}</h3>
+{% load crispy_forms_tags %}
 
+<h3>{{ booking.body }}</h3>
+{% if booked %}
+<div class="alert alert-success" role="alert">
+    Your booking is waiting approval
+</div>
+{% else %}
+{% if user.is_authenticated %}
+
+<h3>Please make a booking:</h3>
+<p>booking as: {{ user.username }}</p>
+<form method="post" style="margin-top: 1.3em;">
+    {{ booking_forms | crispy }}
+    {% csrf_token %}
+    <button type="submit" class="btn btn-signup btn-lg">Submit</button>
+</form>
+{% endif %}
+{% endif %}
 {% endblock content %}
