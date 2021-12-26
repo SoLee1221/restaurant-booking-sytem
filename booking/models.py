@@ -8,7 +8,6 @@ class Booking(models.Model):
     booking_dates = models.DateTimeField()
     user_name = models.ForeignKey(User, on_delete=models.CASCADE, related_name="booking")
     number_of_customers = models.IntegerField(default=1)
-    email = models.EmailField()
     body = models.TextField(default='')
     created_on = models.DateTimeField(auto_now_add=True)
 

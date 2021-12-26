@@ -12,7 +12,7 @@
             <div class="row">
             {% for booking in booking_list %}
             <div>
-                <a href="{% url 'booking_detail' booking.pk %}"><p>Links</p>
+                <a href="{% url 'booking_detail' booking.pk %}">View Booking
                 </a>
             </div>
                 <div class="col-md-4">
@@ -29,10 +29,10 @@
             {% endfor %}
             </div>
             <div>
-                <p>Welcome to International Chinese gutter oil cook house Restraunt make a menu under</p>
+                <p>Welcome to our restaurant, please view our menu and make a booking!</p>
             
             {% if user.is_authenticated %}
-            <button type="button">Book Now!</button>
+            <a href="add_booking"><button type="button">Book Now!</button></a>
             {% else %}  
             <p>Please login or register an account to make a booking!</p>
             {% endif %}

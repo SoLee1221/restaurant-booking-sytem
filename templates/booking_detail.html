@@ -2,21 +2,14 @@
 
 {% load crispy_forms_tags %}
 
-<h3>{{ booking.body }}</h3>
-{% if booked %}
-<div class="alert alert-success" role="alert">
-    Your booking is waiting approval
-</div>
-{% else %}
-{% if user.is_authenticated %}
-
-<h3>Please make a booking:</h3>
-<p>booking as: {{ user.username }}</p>
-<form method="post" style="margin-top: 1.3em;">
-    {{ booking_forms | crispy }}
-    {% csrf_token %}
-    <button type="submit" class="btn btn-signup btn-lg">Submit</button>
-</form>
-{% endif %}
-{% endif %}
+<h5>Number of tables: {{ booking.tables }}</h5>
+<h5>Date booked:  {{ booking.booking_dates }}</h5>
+<h5>Number of Customers: {{ booking.number_of_customers }}</h5>
+<h5>Comment: {{ booking.body }}</h5>
+<a href="/edit_booking/{{ booking.pk }}">
+    <button class="btn btn-signup btn-lg">Edit</button>
+</a>
+<a href="{% url 'booking_detail' booking.pk %}">
+    <button type="submit" class="btn btn-signup btn-lg">Delete</button>
+</a>
 {% endblock content %}
