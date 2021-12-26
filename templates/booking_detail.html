@@ -9,7 +9,7 @@
 <a href="/edit_booking/{{ booking.pk }}">
     <button class="btn btn-signup btn-lg">Edit</button>
 </a>
-<a href="{% url 'booking_detail' booking.pk %}">
-    <button type="submit" class="btn btn-signup btn-lg">Delete</button>
+<a href="/delete_booking/{{ booking.pk }}">
+    <button class="btn btn-signup btn-lg">Delete</button>
 </a>
 {% endblock content %}

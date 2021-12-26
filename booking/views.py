@@ -80,3 +80,8 @@ def edit_booking(request, booking_id):
 
     return render(request, 'edit_booking.html', {'booking': booking, 'booking_forms': BookingForm(instance=booking)})
 
+def delete_booking(request, booking_id):
+    queryset = Booking.objects.all()
+    booking = get_object_or_404(queryset, pk=booking_id)
+    booking.delete()
+    return redirect('home')
