@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic, View
-from .models import Booking
+from django.contrib import messages
+from .models import *
 from .forms import BookingForm
-
+from datetime import timedelta
 # Create your views here.
 class PostList(View):
 
@@ -58,13 +59,27 @@ class BookingDetail(View):
 
 def add_booking(request):
     if request.method == "POST":
-        tables = request.POST.get('tables')
-        booking_dates = request.POST.get('booking_dates')
         number_of_customers = request.POST.get('number_of_customers')
+        booking_dates = datetime.fromisoformat(request.POST.get('booking_dates'))
         body = request.POST.get('body')
-        Booking.objects.create(tables=tables, booking_dates=booking_dates, user_name=request.user, number_of_customers=number_of_customers, body=body)
 
-        return redirect('home')
+        available_tables = Table.objects.filter(seats__gte=number_of_customers)
+        if available_tables.count() == 0:
+            messages.error(request, 'No available table.')
+            return redirect('add_booking')
+            
+        other_bookings = Booking.objects.filter(booking_dates__gt=booking_dates-timedelta(minutes=59))
+        other_bookings = other_bookings.filter(booking_dates__lt=booking_dates+timedelta(minutes=59))
+        booked_tables = other_bookings.values_list('table', flat=True)
+        available_tables = available_tables.exclude(id__in=booked_tables)
+        table = available_tables.order_by('seats').first() or None
+
+        if table:
+            Booking.objects.create(number_of_customers=number_of_customers, booking_dates=booking_dates, body=body, user_name=request.user, table=table)
+            return redirect('home')
+        else:
+            messages.error(request, 'No available table at this time.')
+            return redirect('add_booking')
 
     return render(request, 'add_booking.html', {'booking_forms': BookingForm()})
 

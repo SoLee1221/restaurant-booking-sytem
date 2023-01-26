@@ -11,6 +11,11 @@
     <a href="{% url 'home' %}">
         <button type="submit" class="btn btn-signup btn-lg">Submit Booking</button>
     </a>
+    {% for message in messages %}
+        <div>
+            {{ message }}
+        </div>
+    {% endfor %}
 
 </form>
 

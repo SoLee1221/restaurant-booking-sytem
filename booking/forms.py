@@ -4,4 +4,4 @@ from django import forms
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
-        fields = ('tables', 'booking_dates', 'number_of_customers', 'body')
+        fields = ('number_of_customers', 'booking_dates',  'body')
