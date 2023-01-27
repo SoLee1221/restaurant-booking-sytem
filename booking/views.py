@@ -63,6 +63,12 @@ def add_booking(request):
         booking_dates = datetime.fromisoformat(request.POST.get('booking_dates'))
         body = request.POST.get('body')
 
+        customer_bookings = Booking.objects.filter(user_name=request.user)
+        customer_bookings = customer_bookings.filter(booking_dates__gt=booking_dates-timedelta(hours=3, minutes=59))
+        customer_bookings = customer_bookings.filter(booking_dates__lt=booking_dates+timedelta(hours=3, minutes=59))
+        if customer_bookings.count() != 0:
+            messages.error(request, 'Invalid time. You already have a booking at {0}'.format(str(customer_bookings.first().booking_dates)))
+
         available_tables = Table.objects.filter(seats__gte=number_of_customers)
         if available_tables.count() == 0:
             messages.error(request, 'No available table.')
